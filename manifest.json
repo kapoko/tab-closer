@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Tab Closer",
+  "version": "1.0.0",
+  "description": "Closes untouched tabs after a configurable wall-clock timeout.",
+  "permissions": [
+    "<all_urls>",
+    "alarms",
+    "sessions",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Tab Closer",
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "applications": {
+    "gecko": {
+      "id": "tab-closer@example.local",
+      "strict_min_version": "91.0"
+    }
+  }
+}
