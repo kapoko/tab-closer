@@ -1,6 +1,5 @@
 const DEFAULT_SETTINGS = {
-  timeoutHours: 12,
-  forceClosePromptTabs: true
+  timeoutHours: 12
 };
 
 const ALARM_NAME = "tab-closer-check";
@@ -10,8 +9,7 @@ const LAST_ACTIVATED_KEY = "lastActivatedAt";
 async function getSettings() {
   const stored = await browser.storage.local.get(DEFAULT_SETTINGS);
   return {
-    timeoutHours: normalizeTimeoutHours(stored.timeoutHours),
-    forceClosePromptTabs: stored.forceClosePromptTabs !== false
+    timeoutHours: normalizeTimeoutHours(stored.timeoutHours)
   };
 }
 
@@ -84,16 +82,10 @@ async function closeExpiredTabs() {
   let closed = 0;
   for (const tabId of expiredTabIds) {
     try {
-      if (!settings.forceClosePromptTabs && await shouldSkipPromptSensitiveTab(tabId)) {
-        continue;
-      }
-
       await browser.tabs.remove(tabId);
       closed += 1;
     } catch (error) {
-      if (settings.forceClosePromptTabs) {
-        continue;
-      }
+      continue;
     }
   }
 
@@ -116,28 +108,6 @@ async function markClosableTabsOverdue() {
 async function markOverdueAndClean() {
   await markClosableTabsOverdue();
   return closeExpiredTabs();
-}
-
-async function shouldSkipPromptSensitiveTab(tabId) {
-  try {
-    const results = await browser.tabs.executeScript(tabId, {
-      code: `(() => {
-        const hasBeforeUnload = typeof window.onbeforeunload === "function";
-        const hasFilledField = Array.from(document.querySelectorAll("input, textarea, select")).some((field) => {
-          if (field.disabled || field.readOnly || field.type === "hidden") return false;
-          if (field.type === "checkbox" || field.type === "radio") return field.checked;
-          return Boolean(field.value);
-        });
-        const hasEditableContent = Array.from(document.querySelectorAll("[contenteditable=''], [contenteditable='true']")).some((node) => {
-          return Boolean(node.textContent && node.textContent.trim());
-        });
-        return hasBeforeUnload || hasFilledField || hasEditableContent;
-      })();`
-    });
-    return results.some(Boolean);
-  } catch (error) {
-    return true;
-  }
 }
 
 async function getStatus() {
@@ -165,7 +135,6 @@ async function getStatus() {
 
   return {
     timeoutHours: settings.timeoutHours,
-    forceClosePromptTabs: settings.forceClosePromptTabs,
     openTabCount: tabs.length,
     trackedCount,
     closableOverdueCount

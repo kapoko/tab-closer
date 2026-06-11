@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "description": "Closes untouched tabs after a configurable wall-clock timeout.",
   "permissions": [
-    "<all_urls>",
     "alarms",
     "sessions",
     "storage",

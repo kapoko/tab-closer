@@ -1,17 +1,14 @@
 const DEFAULT_SETTINGS = {
-  timeoutHours: 12,
-  forceClosePromptTabs: true
+  timeoutHours: 12
 };
 
 const form = document.querySelector("#options-form");
 const timeoutHoursInput = document.querySelector("#timeout-hours");
-const forceClosePromptTabsInput = document.querySelector("#force-close-prompt-tabs");
 const status = document.querySelector("#status");
 
 async function loadOptions() {
   const settings = await browser.storage.local.get(DEFAULT_SETTINGS);
   timeoutHoursInput.value = settings.timeoutHours;
-  forceClosePromptTabsInput.checked = settings.forceClosePromptTabs !== false;
 }
 
 async function saveOptions(event) {
@@ -24,8 +21,7 @@ async function saveOptions(event) {
   }
 
   await browser.storage.local.set({
-    timeoutHours,
-    forceClosePromptTabs: forceClosePromptTabsInput.checked
+    timeoutHours
   });
 
   status.textContent = "Saved.";
