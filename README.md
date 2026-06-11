@@ -1,6 +1,6 @@
 # Tab Closer
 
-A Firefox extension that closes tabs after they have not been activated by the user for a configurable number of wall-clock hours.
+A Firefox extension that closes tabs after they have not been activated by the user for a configurable number of wall-clock hours. It closes overdue tabs on startup, giving you a clean browser session.
 
 ## Behavior
 
