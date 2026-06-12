@@ -21,10 +21,16 @@
     "page": "options.html",
     "browser_style": true
   },
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
-      "id": "tab-closer@example.local",
-      "strict_min_version": "91.0"
+      "id": "tab-closer@koman.app",
+      "data_collection_permissions": {
+        "required": ["none"]
+      },
+      "strict_min_version": "140.0"
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
     }
   }
 }

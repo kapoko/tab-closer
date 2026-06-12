@@ -1,0 +1,86 @@
+name: Package and Sign Firefox Extension
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package-and-sign:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Read extension version
+        id: manifest
+        run: |
+          VERSION=$(node -p "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8')).version")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Validate manifest JSON
+        run: node -e "JSON.parse(require('fs').readFileSync('manifest.json', 'utf8'))"
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check background.js
+          node --check options.js
+          node --check popup.js
+
+      - name: Create clean extension source directory
+        run: |
+          mkdir -p dist/source
+          cp manifest.json dist/source/
+          cp background.js dist/source/
+          cp options.html dist/source/
+          cp options.js dist/source/
+          cp popup.html dist/source/
+          cp popup.js dist/source/
+          cp styles.css dist/source/
+          cp README.md dist/source/
+
+      - name: Install web-ext
+        run: npm install --global web-ext
+
+      - name: Lint extension
+        run: web-ext lint --source-dir dist/source
+
+      - name: Build unsigned zip
+        run: |
+          mkdir -p dist/artifacts
+          cd dist/source
+          zip -r "../artifacts/tab-closer-${{ steps.manifest.outputs.version }}.zip" .
+
+      - name: Show unsigned zip contents
+        run: unzip -l "dist/artifacts/tab-closer-${{ steps.manifest.outputs.version }}.zip"
+
+      - name: Sign extension with AMO
+        run: |
+          web-ext sign \
+            --source-dir dist/source \
+            --artifacts-dir dist/artifacts \
+            --channel unlisted \
+            --api-key "$AMO_JWT_ISSUER" \
+            --api-secret "$AMO_JWT_SECRET"
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+
+      - name: Upload unsigned package
+        uses: actions/upload-artifact@v7
+        with:
+          name: tab-closer-unsigned-${{ steps.manifest.outputs.version }}
+          path: dist/artifacts/tab-closer-${{ steps.manifest.outputs.version }}.zip
+          if-no-files-found: error
+
+      - name: Upload signed package
+        uses: actions/upload-artifact@v7
+        with:
+          name: tab-closer-signed-${{ steps.manifest.outputs.version }}
+          path: dist/artifacts/*.xpi
+          if-no-files-found: error
