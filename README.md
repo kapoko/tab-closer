@@ -14,6 +14,7 @@ Arc-style tab closing for Firefox. Closes tabs that have not been activated for 
 - Cleanup also runs every 5 minutes while Firefox is open.
 - Last activation timestamps are stored on Firefox's tab session data, so restored tabs keep their original clock time where Firefox restores extension session data.
 - Private browsing tabs are not handled unless the extension is manually allowed to run in private windows by Firefox.
+- Firefox for Android is not supported because it does not support the tab session storage API this extension uses.
 
 ## Settings
 
@@ -64,7 +65,6 @@ The workflow uploads two artifacts:
 ## Compatibility
 
 - Firefox desktop 140.0 or newer.
-- Firefox for Android 142.0 or newer, if installed there.
 
 ## Data Collection
 
