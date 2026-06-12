@@ -64,7 +64,7 @@ The workflow uploads two artifacts:
 
 ## Compatibility
 
-- Firefox desktop 140.0 or newer.
+- Firefox desktop 142.0 or newer.
 
 ## Data Collection
 
