@@ -43,17 +43,14 @@ Temporary add-ons are removed when Firefox restarts. Package and sign the extens
 
 ## Release Automation
 
-GitHub Actions packages and signs the extension when you push a version tag like `v1.0.0`, or when you run the workflow manually from GitHub's Actions tab.
+GitHub Actions packages the extension and submits it to AMO when you push a version tag like `v1.0.0`, or when you run the workflow manually from GitHub's Actions tab.
 
 Required repository secrets:
 
 - `AMO_JWT_ISSUER`: Mozilla Add-ons API JWT issuer.
 - `AMO_JWT_SECRET`: Mozilla Add-ons API JWT secret.
 
-The workflow uploads two artifacts:
-
-- An unsigned `.zip` package.
-- A signed `.xpi` from Mozilla Add-ons.
+The workflow uploads the unsigned `.zip` source package before submitting it to AMO. Listed submissions are reviewed by AMO asynchronously, so the workflow does not wait for approval or upload a signed `.xpi` artifact.
 
 ## Permissions
 
