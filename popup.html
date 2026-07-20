@@ -1,36 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tab Closer</title>
+    <title>Auto Tab Closer</title>
     <link rel="stylesheet" href="styles.css">
-  </head>
-  <body class="popup-body">
+</head>
+
+<body class="popup-body">
     <main class="popup">
-      <h1>Tab Closer</h1>
-      <dl class="stats">
-        <div>
-          <dt>Timeout</dt>
-          <dd id="timeout-hours">...</dd>
-        </div>
-        <div>
-          <dt>Open tabs</dt>
-          <dd id="open-tab-count">...</dd>
-        </div>
-        <div>
-          <dt>Tracked tabs</dt>
-          <dd id="tracked-count">...</dd>
-        </div>
-        <div>
-          <dt>Overdue now</dt>
-          <dd id="overdue-count">...</dd>
-        </div>
-      </dl>
-      <button id="clean-now" type="button">Close all unpinned tabs now</button>
-      <p id="status" class="status" role="status"></p>
-      <a href="options.html" target="_blank">Settings</a>
+        <h1>Auto Tab Closer</h1>
+        <dl class="stats">
+            <div>
+                <dt>Timeout</dt>
+                <dd id="timeout-hours">...</dd>
+            </div>
+            <div>
+                <dt>Open tabs</dt>
+                <dd id="open-tab-count">...</dd>
+            </div>
+            <div>
+                <dt>Tracked tabs</dt>
+                <dd id="tracked-count">...</dd>
+            </div>
+            <div>
+                <dt>Overdue now</dt>
+                <dd id="overdue-count">...</dd>
+            </div>
+        </dl>
+        <button id="clean-now" type="button">Close all unpinned tabs now</button>
+        <p id="status" class="status" role="status"></p>
+        <a href="options.html" target="_blank">Settings</a>
     </main>
     <script src="popup.js"></script>
-  </body>
+</body>
+
 </html>
