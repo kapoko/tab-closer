@@ -64,7 +64,7 @@ jobs:
           web-ext sign \
             --source-dir dist/source \
             --artifacts-dir dist/artifacts \
-            --channel unlisted \
+            --channel listed \
             --api-key "$AMO_JWT_ISSUER" \
             --api-secret "$AMO_JWT_SECRET"
         env:
