@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Auto Tab Closer",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Arc-style tab closing for Firefox",
     "permissions": ["alarms", "sessions", "storage", "tabs"],
     "background": {
