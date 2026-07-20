@@ -44,6 +44,7 @@ jobs:
           cp styles.css dist/source/
           cp README.md dist/source/
           cp LICENSE dist/source/
+          cp -R icons dist/source/
 
       - name: Install web-ext
         run: npm install --global web-ext
@@ -60,19 +61,6 @@ jobs:
       - name: Show unsigned zip contents
         run: unzip -l "dist/artifacts/tab-closer-${{ steps.manifest.outputs.version }}.zip"
 
-      - name: Sign extension with AMO
-        run: |
-          web-ext sign \
-            --source-dir dist/source \
-            --artifacts-dir dist/artifacts \
-            --channel listed \
-            --amo-metadata amo-metadata.json \
-            --api-key "$AMO_JWT_ISSUER" \
-            --api-secret "$AMO_JWT_SECRET"
-        env:
-          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
-          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
-
       - name: Upload unsigned package
         uses: actions/upload-artifact@v7
         with:
@@ -80,9 +68,16 @@ jobs:
           path: dist/artifacts/tab-closer-${{ steps.manifest.outputs.version }}.zip
           if-no-files-found: error
 
-      - name: Upload signed package
-        uses: actions/upload-artifact@v7
-        with:
-          name: tab-closer-signed-${{ steps.manifest.outputs.version }}
-          path: dist/artifacts/*.xpi
-          if-no-files-found: error
+      - name: Submit extension to AMO
+        run: |
+          web-ext sign \
+            --source-dir dist/source \
+            --artifacts-dir dist/artifacts \
+            --channel listed \
+            --amo-metadata amo-metadata.json \
+            --approval-timeout 0 \
+            --api-key "$AMO_JWT_ISSUER" \
+            --api-secret "$AMO_JWT_SECRET"
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
