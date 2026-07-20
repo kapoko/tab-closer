@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "Tab Closer",
+    "name": "Auto Tab Closer",
     "version": "1.0.2",
     "description": "Arc-style tab closing for Firefox",
     "permissions": ["alarms", "sessions", "storage", "tabs"],
@@ -18,7 +18,7 @@
     },
     "browser_specific_settings": {
         "gecko": {
-            "id": "tab-closer@koman.app",
+            "id": "auto-tab-closer@koman.app",
             "data_collection_permissions": {
                 "required": ["none"]
             },
