@@ -1,4 +1,4 @@
-# Tab Closer
+# Auto Tab Closer
 
 Arc-style tab closing for Firefox. Closes tabs that have not been activated for a configurable number of hours wall-clock hours, even after the browser has been closed.
 

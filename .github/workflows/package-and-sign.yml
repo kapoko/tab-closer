@@ -43,6 +43,7 @@ jobs:
           cp popup.js dist/source/
           cp styles.css dist/source/
           cp README.md dist/source/
+          cp LICENSE dist/source/
 
       - name: Install web-ext
         run: npm install --global web-ext
@@ -65,6 +66,7 @@ jobs:
             --source-dir dist/source \
             --artifacts-dir dist/artifacts \
             --channel listed \
+            --amo-metadata amo-metadata.json \
             --api-key "$AMO_JWT_ISSUER" \
             --api-secret "$AMO_JWT_SECRET"
         env:
