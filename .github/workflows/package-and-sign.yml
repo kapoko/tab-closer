@@ -75,7 +75,7 @@ jobs:
             --artifacts-dir dist/artifacts \
             --channel listed \
             --amo-metadata amo-metadata.json \
-            --approval-timeout 0 \
+            --approval-timeout 20700000 \
             --api-key "$AMO_JWT_ISSUER" \
             --api-secret "$AMO_JWT_SECRET"
         env:
