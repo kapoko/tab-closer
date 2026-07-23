@@ -1,3 +1,5 @@
+<img src="icons/icon-128.png" alt="Auto Tab Closer icon" width="64">
+
 # Auto Tab Closer
 
 Arc-style tab closing for Firefox. Closes tabs that have not been activated for a configurable number of hours wall-clock hours, even after the browser has been closed.
